@@ -1,1 +1,158 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ignition</title>
+    <meta
+      name="description"
+      content="Ignition by Dylan Kwok and Fremont Student Makers: a minimal educational rocketry hub for beginners."
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <script id="nav-data" type="application/json">
+      {
+        "groups": [
+          {
+            "label": "Start",
+            "tone": "tab-blue",
+            "items": [
+              { "label": "Home", "anchor": "home" },
+              { "label": "Questionnaire", "anchor": "questionnaire" },
+              { "label": "Safety", "anchor": "safety" }
+            ]
+          },
+          {
+            "label": "Learn",
+            "tone": "tab-red",
+            "items": [
+              { "label": "Basics", "anchor": "basics" },
+              { "label": "Resources", "anchor": "resources" }
+            ]
+          }
+        ]
+      }
+    </script>
+    <script id="footer-data" type="application/json">
+      {
+        "credit": "Created by Dylan Kwok as part of Fremont Student Makers.",
+        "links": [
+          { "label": "Home", "anchor": "home" },
+          { "label": "Questionnaire", "anchor": "questionnaire" },
+          { "label": "Safety", "anchor": "safety" }
+        ]
+      }
+    </script>
 
+    <header id="site-header"></header>
+
+    <main>
+      <section id="home" class="section hero section-block">
+        <div class="card">
+          <p class="kicker">Ignition</p>
+          <h1>Beginner rocketry, kept static.</h1>
+          <p class="lead">
+            A small rocketry hub with static content, reusable nav/footer snippets, and one simple questionnaire.
+          </p>
+        </div>
+      </section>
+
+      <section id="basics" class="section section-block">
+        <div>
+          <p class="kicker">Start here</p>
+          <h2>What model rocketry is</h2>
+        </div>
+        <div class="section-columns">
+          <article class="card">
+            <h3>Hands-on learning</h3>
+            <p>Model rocketry is a simple way to learn flight, stability, and recovery through small reusable rockets.</p>
+          </article>
+          <article class="card">
+            <h3>What you need</h3>
+            <p>A starter kit, a safe launch site, and a quick check of local rules before launch day.</p>
+          </article>
+        </div>
+      </section>
+
+      <section id="questionnaire" class="section section-block">
+        <div>
+          <p class="kicker">Questionnaire</p>
+          <h2>Find a simple starter path</h2>
+        </div>
+        <div class="card questionnaire-card">
+          <form id="starter-form" class="questionnaire-form">
+            <label>
+              How much experience do you have?
+              <select name="experience" required>
+                <option value="">Choose one</option>
+                <option value="new">I am brand new</option>
+                <option value="some">I have built one before</option>
+                <option value="lot">I have built several</option>
+              </select>
+            </label>
+            <label>
+              What do you want next?
+              <select name="goal" required>
+                <option value="">Choose one</option>
+                <option value="kit">A first kit</option>
+                <option value="club">A club launch</option>
+                <option value="build">A more advanced build</option>
+              </select>
+            </label>
+            <label>
+              Do you already have a launch group?
+              <select name="club" required>
+                <option value="">Choose one</option>
+                <option value="yes">Yes</option>
+                <option value="no">No</option>
+              </select>
+            </label>
+            <button type="submit" class="button-primary">Get a recommendation</button>
+          </form>
+          <p id="starter-result" class="form-result" aria-live="polite">Fill out the form to get a simple next step.</p>
+        </div>
+      </section>
+
+      <section id="safety" class="section section-block">
+        <div>
+          <p class="kicker">Safety</p>
+          <h2>Keep it simple and safe</h2>
+        </div>
+        <div class="grid">
+          <article class="card">
+            <h3>Before launch</h3>
+            <ul class="checklist">
+              <li>Check wind and weather</li>
+              <li>Confirm the motor and igniter</li>
+              <li>Set a clear launch area</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>After launch</h3>
+            <ul class="checklist">
+              <li>Review recovery damage</li>
+              <li>Inspect the airframe</li>
+              <li>Note what to improve next time</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <section id="resources" class="section section-block">
+        <div>
+          <p class="kicker">Resources</p>
+          <h2>Keep a small reference list</h2>
+        </div>
+        <div class="grid">
+          <article class="card"><h3>Starter references</h3><p>Keep one or two trusted beginner guides, then add more only when needed.</p></article>
+          <article class="card"><h3>Launch clubs</h3><p>Use a club or organized field whenever possible for your first flights.</p></article>
+        </div>
+      </section>
+    </main>
+
+    <footer id="site-footer"></footer>
+
+    <script type="module" src="main.js"></script>
+  </body>
+</html>
