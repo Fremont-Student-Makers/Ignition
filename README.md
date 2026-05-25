@@ -8,6 +8,7 @@ Ignition is a minimal educational rocketry website created by Dylan Kwok as part
 - Navigation and footer loaded from JSON embedded in `index.html`
 - One small questionnaire form with light JavaScript handling
 - No Vite, no build step, no framework dependency
+- Content-first structure designed to stay easy to edit by hand
 
 ## Editing
 
@@ -27,3 +28,5 @@ Open `index.html`, `styles.css`, and `main.js` directly in VS Code.
 - Update page content directly in `index.html`.
 - Adjust questionnaire behavior in `main.js`.
 - No package install or build command is required.
+- Keep future growth small: add sections, lists, and simple cards before considering anything more complex.
+- For regional coverage, start with broad country or region groupings before trying to add location lookup or maps.

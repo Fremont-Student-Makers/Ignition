@@ -1,43 +1,49 @@
-function parseJsonScript(id) {
-  const element = document.getElementById(id);
-  if (!element) return null;
-  try {
-    return JSON.parse(element.textContent || "null");
-  } catch {
-    return null;
-  }
+const pages = [
+  { label: "Home", href: "index.html" },
+  { label: "Launch", href: "launch.html" },
+  { label: "Build", href: "build.html" },
+  { label: "Simulate", href: "simulate.html" },
+  { label: "Competitions", href: "competitions.html" },
+  { label: "Active Control", href: "electronics.html" },
+];
+
+const regionLabels = {
+  all: "All regions",
+  global: "International / global",
+  us: "United States",
+  ca: "Canada",
+  uk: "United Kingdom",
+  eu: "Europe",
+  in: "India",
+  au: "Australia / New Zealand",
+};
+
+function currentPath() {
+  const path = window.location.pathname.split("/").pop() || "index.html";
+  return path === "" ? "index.html" : path;
 }
 
-function renderNav(navData) {
+function renderNav() {
   const header = document.getElementById("site-header");
-  if (!header || !navData) return;
+  if (!header) return;
 
-  const groupsMarkup = navData.groups
-    .map((group) => {
-      const itemsMarkup = group.items
-        .map(
-          (item) => `<a class="nav-link" href="#${item.anchor}">${item.label}</a>`,
-        )
-        .join("");
-
-      return `
-        <details class="nav-group ${group.tone}">
-          <summary>${group.label}</summary>
-          <div class="nav-group-menu">${itemsMarkup}</div>
-        </details>
-      `;
+  const activePath = currentPath();
+  const navLinks = pages
+    .map((page) => {
+      const active = page.href === activePath;
+      return `<a class="nav-link${active ? " is-active" : ""}" href="${page.href}">${page.label}</a>`;
     })
     .join("");
 
   header.innerHTML = `
     <div class="container header-grid">
-      <a class="brand" href="#home">Ignition</a>
+      <a class="brand" href="index.html">Ignition</a>
       <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
         <span></span><span></span><span></span>
         <span class="sr-only">Toggle navigation</span>
       </button>
       <nav class="main-nav" id="site-nav" aria-label="Primary navigation">
-        ${groupsMarkup}
+        ${navLinks}
       </nav>
     </div>
   `;
@@ -50,50 +56,432 @@ function renderNav(navData) {
   });
 }
 
-function renderFooter(footerData) {
+function renderFooter() {
   const footer = document.getElementById("site-footer");
-  if (!footer || !footerData) return;
+  if (!footer) return;
+
+  const footerLinks = pages.map((page) => `<a href="${page.href}">${page.label}</a>`).join("");
 
   footer.innerHTML = `
     <div class="container footer-grid">
-      <p>${footerData.credit}</p>
+      <p>Ignition keeps rocketry simple, beginner-friendly, and easy to navigate.</p>
       <nav class="footer-nav" aria-label="Footer navigation">
-        ${footerData.links.map((link) => `<a href="#${link.anchor}">${link.label}</a>`).join("")}
+        ${footerLinks}
       </nav>
     </div>
   `;
 }
 
+function renderRegionPanel() {
+  if (currentPath() === "electronics.html") return;
+
+  const header = document.getElementById("site-header");
+  if (!header || document.querySelector("[data-region-panel]") ) return;
+
+  const panel = document.createElement("section");
+  panel.className = "section region-panel";
+  panel.setAttribute("data-region-panel", "true");
+  panel.innerHTML = `
+    <div class="section-heading">
+      <p class="eyebrow">Region selector</p>
+      <h2>Show information for your country or region</h2>
+    </div>
+    <div class="region-toolbar">
+      <label for="site-region-select">Relevant for</label>
+      <select id="site-region-select" data-region-select>
+        <option value="all">All regions</option>
+        <option value="global">International / global</option>
+        <option value="us">United States</option>
+        <option value="ca">Canada</option>
+        <option value="uk">United Kingdom</option>
+        <option value="eu">Europe</option>
+        <option value="in">India</option>
+        <option value="au">Australia / New Zealand</option>
+      </select>
+      <p class="region-status">Showing boxes relevant to <strong data-region-current>All regions</strong>.</p>
+    </div>
+  `;
+
+  header.insertAdjacentElement("afterend", panel);
+}
+
+function getRegionStorageKey() {
+  return "ignition-region";
+}
+
+function getRegionLabel(region) {
+  return regionLabels[region] || regionLabels.all;
+}
+
+function regionApplies(itemRegions, selectedRegion) {
+  if (selectedRegion === "all") {
+    return true;
+  }
+
+  const regions = itemRegions
+    .split(",")
+    .map((region) => region.trim())
+    .filter(Boolean);
+
+  return regions.includes("global") || regions.includes(selectedRegion);
+}
+
+function wireRegionFilters() {
+  const selects = document.querySelectorAll("[data-region-select]");
+  if (!selects.length) return;
+
+  const storageKey = getRegionStorageKey();
+  const savedRegion = localStorage.getItem(storageKey) || "all";
+
+  const applyRegion = (region) => {
+    document.querySelectorAll("[data-region-item]").forEach((item) => {
+      const itemRegions = item.getAttribute("data-regions") || "global";
+      item.hidden = !regionApplies(itemRegions, region);
+    });
+
+    document.querySelectorAll("[data-region-current]").forEach((label) => {
+      label.textContent = getRegionLabel(region);
+    });
+  };
+
+  selects.forEach((select) => {
+    const initialValue = regionLabels[savedRegion] ? savedRegion : select.value;
+    select.value = initialValue;
+    applyRegion(initialValue);
+
+    select.addEventListener("change", () => {
+      const region = select.value;
+      localStorage.setItem(storageKey, region);
+      applyRegion(region);
+    });
+  });
+
+  window.addEventListener("storage", (event) => {
+    if (event.key !== storageKey || !event.newValue) return;
+    const region = event.newValue;
+    selects.forEach((select) => {
+      select.value = region;
+    });
+    applyRegion(region);
+  });
+}
+
+function getBudgetLabel(value) {
+  const labels = {
+    1: "Very low",
+    2: "Starter kit",
+    3: "Flexible",
+    4: "Higher budget",
+    5: "Open budget",
+  };
+
+  return labels[value] || "Starter kit";
+}
+
+function getExperienceLabel(value) {
+  const labels = {
+    0: "New",
+    1: "Beginner",
+    2: "Some experience",
+    3: "Confident",
+    4: "Advanced",
+  };
+
+  return labels[value] || "Beginner";
+}
+
+function getInterestLabel(value) {
+  const labels = {
+    0: "Low",
+    1: "Basic",
+    2: "Balanced",
+    3: "Focused",
+    4: "High",
+  };
+
+  return labels[value] || "Balanced";
+}
+
+function chooseRoute(formData) {
+  const build = Number(formData.get("build") || 0);
+  const electronics = Number(formData.get("electronics") || 0);
+  const experience = Number(formData.get("experience") || 0);
+  const budget = Number(formData.get("budget") || 1);
+  const age = Number(formData.get("age") || 13);
+
+  const recommendations = [];
+
+  const addRecommendation = (page, title, note, reason) => {
+    recommendations.push({ page, title, note, reason });
+  };
+
+  if (experience <= 0) {
+    addRecommendation(
+      "build.html",
+      "Build",
+      "Start with a beginner kit and follow the instructions step by step.",
+      "No experience should always begin with a kit so the process stays simple and guided."
+    );
+    addRecommendation(
+      "launch.html",
+      "Launch",
+      "Learn the basics of safe first flights and launch-day setup.",
+      "A first kit is easier to understand when you also learn how launch day works."
+    );
+    addRecommendation(
+      "simulate.html",
+      "Simulate",
+      "See how a simple rocket is likely to behave before you build more advanced designs.",
+      "Simulation helps you understand the hobby without adding complexity yet."
+    );
+  } else if (electronics >= 3) {
+    addRecommendation(
+      "electronics.html",
+      "Active Control",
+      "Explore aerodynamic guidance, airbrakes, thrust vector control, and payload systems.",
+      "High electronics interest should point straight to the Active Control page."
+    );
+    addRecommendation(
+      "build.html",
+      "Build",
+      "Use a kit as a base, then move toward more custom assembly.",
+      "Electronics projects are easier when you already know the airframe basics."
+    );
+    addRecommendation(
+      "launch.html",
+      "Launch",
+      "Review the launch process so your electronics can fly safely.",
+      "Even advanced projects need a safe launch path."
+    );
+  } else if (budget >= 4 && experience >= 3) {
+    addRecommendation(
+      "build.html",
+      "Build",
+      "Move beyond kits and start building your own rockets.",
+      "A higher budget and more experience make custom building realistic."
+    );
+    addRecommendation(
+      "competitions.html",
+      "Competitions",
+      "Look at certification paths and challenge flights.",
+      "With more experience, competition and certification paths make sense."
+    );
+    addRecommendation(
+      "simulate.html",
+      "Simulate",
+      "Check stability and altitude before investing in larger builds.",
+      "More advanced projects should still be simulated first."
+    );
+  } else if (build <= 1) {
+    addRecommendation(
+      "build.html",
+      "Build",
+      "Start with a kit instead of custom parts.",
+      "Low build interest usually means a kit will be the easiest and most enjoyable start."
+    );
+    addRecommendation(
+      "launch.html",
+      "Launch",
+      "See what happens on a first flight day.",
+      "It helps to understand launch basics before trying more complex work."
+    );
+    addRecommendation(
+      "simulate.html",
+      "Simulate",
+      "Use a simulator once you are comfortable with a kit.",
+      "Simulation is useful later, after the first build is familiar."
+    );
+  } else {
+    addRecommendation(
+      "build.html",
+      "Build",
+      "A kit gives you a clear next step and a manageable first project.",
+      "A kit is still the most reliable starting point for most users."
+    );
+    addRecommendation(
+      "launch.html",
+      "Launch",
+      "Learn the first-flight process and safety checks.",
+      "Launch knowledge keeps the hobby grounded and practical."
+    );
+    addRecommendation(
+      "simulate.html",
+      "Simulate",
+      "Compare simple design choices before you upgrade.",
+      "Simulation helps once the basics are in place."
+    );
+  }
+
+  return recommendations.slice(0, 3);
+}
+
+function syncStarterOutputs(form) {
+  const outputs = {
+    age: form.querySelector('[data-output="age"]'),
+    budget: form.querySelector('[data-output="budget"]'),
+    experience: form.querySelector('[data-output="experience"]'),
+    build: form.querySelector('[data-output="build"]'),
+    electronics: form.querySelector('[data-output="electronics"]'),
+  };
+
+  const update = () => {
+    const data = new FormData(form);
+    const age = Number(data.get("age") || 13);
+    const budget = Number(data.get("budget") || 2);
+    const experience = Number(data.get("experience") || 1);
+    const build = Number(data.get("build") || 2);
+    const electronics = Number(data.get("electronics") || 1);
+
+    if (outputs.age) outputs.age.textContent = `${age}`;
+    if (outputs.budget) outputs.budget.textContent = getBudgetLabel(budget);
+    if (outputs.experience) outputs.experience.textContent = getExperienceLabel(experience);
+    if (outputs.build) outputs.build.textContent = getInterestLabel(build);
+    if (outputs.electronics) outputs.electronics.textContent = getInterestLabel(electronics);
+  };
+
+  form.querySelectorAll('input[type="range"]').forEach((input) => {
+    input.addEventListener("input", update);
+  });
+
+  update();
+}
+
 function wireQuestionnaire() {
   const form = document.getElementById("starter-form");
+  const results = document.getElementById("starter-results");
   const result = document.getElementById("starter-result");
-  if (!form || !result) return;
+  const note = document.getElementById("starter-note");
+  const options = document.getElementById("starter-options");
+  if (!form || !results || !result || !note || !options) return;
+
+  syncStarterOutputs(form);
+
+  const renderOptions = (recommendations) => {
+    options.innerHTML = recommendations
+      .map(
+        (item, index) => `
+          <li class="starter-option">
+            <a class="button-${index === 0 ? "primary" : "secondary"}" href="${item.page}">${item.title}</a>
+            <p>${item.reason}</p>
+            <p>${item.note}</p>
+          </li>`
+      )
+      .join("");
+  };
 
   form.addEventListener("submit", (event) => {
     event.preventDefault();
     const data = new FormData(form);
-    const experience = data.get("experience");
-    const goal = data.get("goal");
-    const club = data.get("club");
+    const recommendations = chooseRoute(data);
+    const primary = recommendations[0];
 
-    let message = "Start with a small starter kit and a local launch group.";
-
-    if (experience === "new" && goal === "kit") {
-      message = club === "yes"
-        ? "Start with a beginner kit and bring it to a club launch for help with setup."
-        : "Start with a beginner kit, then look for a local club or launch day before flying.";
-    } else if (experience === "some" && goal === "build") {
-      message = club === "yes"
-        ? "Try a slightly larger kit and ask your club about recovery and motor choices."
-        : "Build one more simple rocket first, then join a club for your next step.";
-    } else if (experience === "lot" && goal === "club") {
-      message = "You are ready for club launches, safety review, and more advanced recovery practice.";
-    }
-
-    result.textContent = message;
+    results.hidden = false;
+    result.textContent = primary.title;
+    note.textContent = primary.reason;
+    renderOptions(recommendations);
   });
 }
 
-renderNav(parseJsonScript("nav-data"));
-renderFooter(parseJsonScript("footer-data"));
+function wireActiveControlGate() {
+  if (currentPath() !== "electronics.html") return;
+
+  const body = document.body;
+  const form = document.getElementById("active-control-check");
+  const shell = document.getElementById("active-control-shell");
+  const warning = document.getElementById("active-control-warning");
+  const warningLabel = document.getElementById("active-control-warning-label");
+  const warningTitle = document.getElementById("active-control-warning-title");
+  const warningMessage = document.getElementById("active-control-warning-message");
+  const warningReasons = document.getElementById("active-control-warning-reasons");
+  const dismissButton = warning?.querySelector("[data-warning-close]");
+
+  if (!form || !shell || !warning || !warningLabel || !warningTitle || !warningMessage || !warningReasons || !dismissButton) {
+    return;
+  }
+
+  const regionLabelMap = {
+    all: "All regions",
+    global: "International / global",
+    us: "United States",
+    ca: "Canada",
+    uk: "United Kingdom",
+    eu: "Europe",
+    in: "India",
+    au: "Australia / New Zealand",
+    other: "Other / not listed",
+  };
+
+  const showWarning = ({ approved, reasons, region }) => {
+    warning.hidden = false;
+    shell.hidden = false;
+    body.classList.add("active-control-unlocked");
+    warning.classList.toggle("control-warning--approved", approved);
+    warning.classList.toggle("control-warning--danger", !approved);
+    warningLabel.textContent = approved ? "Approved with caution" : "Do not try this yet";
+    warningTitle.textContent = approved
+      ? "You can continue, but this is still advanced and dangerous."
+      : "Stop here and learn more before trying active control.";
+    warningMessage.textContent = approved
+      ? "You passed the basic screening, but this still demands care, supervision, and honest range discipline."
+      : "This is advanced work and can injure you or other people if you rush it.";
+    warningReasons.innerHTML = reasons.map((reason) => `<li>${reason}</li>`).join("");
+    shell.hidden = false;
+    localStorage.setItem("ignition-region", region);
+  };
+
+  form.addEventListener("submit", (event) => {
+    event.preventDefault();
+
+    const data = new FormData(form);
+    const launches = Number(data.get("launches") || 0);
+    const designed = Number(data.get("designed") || 0);
+    const region = String(data.get("region") || "other");
+    const acknowledged = data.get("acknowledge") === "on";
+
+    const reasons = [];
+    const regionLabel = regionLabelMap[region] || regionLabelMap.other;
+
+    if (launches < 3) {
+      reasons.push(`You have only launched ${launches} rocket${launches === 1 ? "" : "s"}; this is too early for active control.`);
+    }
+
+    if (designed < 1) {
+      reasons.push("You should first design and simulate at least one rocket before trying this.");
+    }
+
+    if (region === "other") {
+      reasons.push(`Your region is listed as ${regionLabel}, so local rules may not allow this kind of project.`);
+    }
+
+    if (!acknowledged) {
+      reasons.push("You must acknowledge that this project is dangerous before continuing.");
+    }
+
+    const approved = reasons.length === 0;
+
+    if (approved) {
+      showWarning({
+        approved: true,
+        reasons: ["You meet the basic starter criteria, but this remains advanced and dangerous."],
+        region,
+      });
+    } else {
+      showWarning({
+        approved: false,
+        reasons,
+        region,
+      });
+    }
+  });
+
+  dismissButton.addEventListener("click", () => {
+    warning.hidden = true;
+  });
+}
+
+renderNav();
+renderFooter();
+renderRegionPanel();
 wireQuestionnaire();
+wireRegionFilters();
+wireActiveControlGate();

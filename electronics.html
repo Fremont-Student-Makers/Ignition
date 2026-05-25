@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!doctype html>
+    <html lang="en">
+      <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Active Control | Ignition</title>
+        <meta
+          name="description"
+          content="Active Control covers aerodynamic guidance, airbrakes, thrust vector control, and related flight-control ideas for model rocketry."
+        />
+        <link rel="stylesheet" href="styles.css" />
+      </head>
+      <body data-page="electronics">
+        <header id="site-header"></header>
+
+        <section id="active-control-gate" class="section control-gate">
+          <div class="card control-gate-card">
+            <p class="eyebrow">Before you continue</p>
+            <h1>Active Control is advanced and dangerous</h1>
+            <p class="lede">
+              Answer honestly. This project can injure you or other people if it is rushed or attempted too early.
+            </p>
+
+            <form id="active-control-check" class="control-check-form">
+              <label>
+                How many rockets have you launched?
+                <input type="number" name="launches" min="0" max="999" value="0" />
+              </label>
+
+              <label>
+                How many have you designed by yourself?
+                <input type="number" name="designed" min="0" max="999" value="0" />
+              </label>
+
+              <!-- Removed simulated dropdown per request -->
+
+              <label>
+                What region are you in?
+                <select name="region">
+                  <option value="all">All regions</option>
+                  <option value="global">International / global</option>
+                  <option value="us">United States</option>
+                  <option value="ca">Canada</option>
+                  <option value="uk">United Kingdom</option>
+                  <option value="eu">Europe</option>
+                  <option value="in">India</option>
+                  <option value="au">Australia / New Zealand</option>
+                  <option value="other">Other / not listed</option>
+                </select>
+              </label>
+
+              <label class="control-acknowledgement">
+                <input type="checkbox" name="acknowledge" />
+                I understand this is advanced work and could injure me or others.
+              </label>
+
+              <button type="submit" class="button-primary">Continue to Active Control</button>
+            </form>
+
+            <div id="active-control-warning" class="control-warning" hidden>
+              <div class="control-warning-header">
+                <p class="eyebrow" id="active-control-warning-label">Warning</p>
+                <button type="button" class="control-warning-close" data-warning-close aria-label="Dismiss warning">Dismiss</button>
+              </div>
+              <h2 id="active-control-warning-title"></h2>
+              <p id="active-control-warning-message"></p>
+              <ul id="active-control-warning-reasons"></ul>
+            </div>
+          </div>
+        </section>
+
+        <div id="active-control-shell" hidden>
+          <main>
+            <section class="section hero-grid">
+              <div class="hero-copy">
+                <p class="eyebrow">Active Control</p>
+                <h1>Shape flight with guidance and control.</h1>
+                <p class="lede">
+                  Active Control is the branch for aerodynamic guidance, airbrakes, thrust vector control, and other ways to influence a rocket during flight.
+                </p>
+                <div class="hero-actions">
+                  <a class="button-primary" href="index.html#start">Use the starter flow</a>
+                  <a class="button-secondary" href="simulate.html">Review Simulate</a>
+                </div>
+              </div>
+              <div class="hero-media">
+                <div class="photo-slot photo-slot-large"><span>Photo area</span><strong>Guidance, brakes, or control surfaces</strong></div>
+                <div class="photo-grid">
+                  <div class="photo-slot"><span>Photo area</span><strong>Control surfaces</strong></div>
+                  <div class="photo-slot"><span>Photo area</span><strong>Airbrake assembly</strong></div>
+                  <div class="photo-slot"><span>Photo area</span><strong>Vectoring hardware</strong></div>
+                </div>
+              </div>
+            </section>
+
+            <section class="section info-grid">
+              <article class="card">
+                <p class="eyebrow">Aerodynamic guidance</p>
+                <h2>Steer with shape and fins</h2>
+                <p>Guidance systems use the rocket’s shape, fins, and control inputs to keep flight stable and pointed where it should go.</p>
+              </article>
+              <article class="card">
+                <p class="eyebrow">Airbrakes and vectoring</p>
+                <h2>Control speed and direction</h2>
+                <p>Airbrakes can slow or adjust altitude, while thrust vector control changes the motor’s direction of push.</p>
+              </article>
+            </section>
+
+            <section class="section page-preview">
+              <div class="section-heading">
+                <p class="eyebrow">Active control topics</p>
+                <h2>Start here once the basics are stable.</h2>
+              </div>
+              <div class="grid">
+                <article class="card"><h3>Aerodynamic guidance</h3><p>Use fins, canards, or guided control ideas to influence flight path.</p></article>
+                <article class="card"><h3>Airbrakes</h3><p>Increase drag on purpose to slow the rocket or adjust altitude.</p></article>
+                <article class="card"><h3>Thrust vector control</h3><p>Point the thrust slightly off-center to steer while the motor is burning.</p></article>
+                <article class="card"><h3>Control integration</h3><p>Combine sensors, timing, and control surfaces carefully so the system remains safe and predictable.</p></article>
+              </div>
+            </section>
+          </main>
+
+          <footer id="site-footer"></footer>
+        </div>
+
+        <script type="module" src="main.js"></script>
+      </body>
+    </html>
+

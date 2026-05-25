@@ -6,147 +6,195 @@
     <title>Ignition</title>
     <meta
       name="description"
-      content="Ignition by Dylan Kwok and Fremont Student Makers: a minimal educational rocketry hub for beginners."
+      content="Ignition is a simple beginner guide to model rocketry with clear next steps for launch, build, simulation, competitions, and electronics."
     />
     <link rel="stylesheet" href="styles.css" />
   </head>
-  <body>
-    <script id="nav-data" type="application/json">
-      {
-        "groups": [
-          {
-            "label": "Start",
-            "tone": "tab-blue",
-            "items": [
-              { "label": "Home", "anchor": "home" },
-              { "label": "Questionnaire", "anchor": "questionnaire" },
-              { "label": "Safety", "anchor": "safety" }
-            ]
-          },
-          {
-            "label": "Learn",
-            "tone": "tab-red",
-            "items": [
-              { "label": "Basics", "anchor": "basics" },
-              { "label": "Resources", "anchor": "resources" }
-            ]
-          }
-        ]
-      }
-    </script>
-    <script id="footer-data" type="application/json">
-      {
-        "credit": "Created by Dylan Kwok as part of Fremont Student Makers.",
-        "links": [
-          { "label": "Home", "anchor": "home" },
-          { "label": "Questionnaire", "anchor": "questionnaire" },
-          { "label": "Safety", "anchor": "safety" }
-        ]
-      }
-    </script>
-
+  <body data-page="home">
     <header id="site-header"></header>
 
     <main>
-      <section id="home" class="section hero section-block">
-        <div class="card">
-          <p class="kicker">Ignition</p>
-          <h1>Beginner rocketry, kept static.</h1>
-          <p class="lead">
-            A small rocketry hub with static content, reusable nav/footer snippets, and one simple questionnaire.
+      <section class="section hero-grid">
+        <div class="hero-copy">
+          <p class="eyebrow">Ignition</p>
+          <h1>Model rocketry, explained plainly.</h1>
+          <p class="lede">
+            Ignition is a simple, beginner-first guide to model rocketry. It explains the hobby objectively, shows what the major paths look like, and helps users choose the right next step.
           </p>
+          <div class="hero-actions">
+            <a class="button-primary" href="#start">How to get started</a>
+            <a class="button-secondary" href="launch.html">Start with Launch</a>
+          </div>
+        </div>
+
+        <div class="hero-media">
+          <div class="photo-slot photo-slot-large">
+            <span>Primary photo area</span>
+            <strong>Launchpad or lift-off image</strong>
+          </div>
+          <div class="photo-grid">
+            <div class="photo-slot"><span>Photo area</span><strong>Starter rocket</strong></div>
+            <div class="photo-slot"><span>Photo area</span><strong>Workbench or fins</strong></div>
+            <div class="photo-slot"><span>Photo area</span><strong>Rocket in the air</strong></div>
+          </div>
         </div>
       </section>
 
-      <section id="basics" class="section section-block">
-        <div>
-          <p class="kicker">Start here</p>
-          <h2>What model rocketry is</h2>
-        </div>
-        <div class="section-columns">
-          <article class="card">
-            <h3>Hands-on learning</h3>
-            <p>Model rocketry is a simple way to learn flight, stability, and recovery through small reusable rockets.</p>
-          </article>
-          <article class="card">
-            <h3>What you need</h3>
-            <p>A starter kit, a safe launch site, and a quick check of local rules before launch day.</p>
-          </article>
-        </div>
+      <section class="section info-grid">
+        <article class="card">
+          <p class="eyebrow">What it is</p>
+          <h2>A small engineering hobby with a clear launch cycle</h2>
+          <p>
+            Model rocketry uses factory-made motors, simple airframes, and recovery systems like parachutes or streamers. It is built around preparation, launch, recovery, and review.
+          </p>
+        </article>
+        <article class="card">
+          <p class="eyebrow">What it is not</p>
+          <h2>Not a crowded reference library</h2>
+          <p>
+            The goal is not to overwhelm new users. The site keeps the hobby approachable, shows the basics first, and sends each visitor toward the most relevant resource path.
+          </p>
+        </article>
       </section>
 
-      <section id="questionnaire" class="section section-block">
-        <div>
-          <p class="kicker">Questionnaire</p>
-          <h2>Find a simple starter path</h2>
+      <section id="start" class="section start-section">
+        <div class="section-heading">
+          <p class="eyebrow">How to get started</p>
+          <h2>Answer a few simple questions, then go to the right path.</h2>
         </div>
-        <div class="card questionnaire-card">
-          <form id="starter-form" class="questionnaire-form">
+
+        <div class="starter-layout">
+          <form id="starter-form" class="card slider-card">
             <label>
-              How much experience do you have?
-              <select name="experience" required>
-                <option value="">Choose one</option>
-                <option value="new">I am brand new</option>
-                <option value="some">I have built one before</option>
-                <option value="lot">I have built several</option>
-              </select>
+              Age
+              <input type="range" name="age" min="8" max="21" value="13" />
+              <div class="slider-row">
+                <span>8</span>
+                <output data-output="age">13</output>
+                <span>21+</span>
+              </div>
             </label>
+
             <label>
-              What do you want next?
-              <select name="goal" required>
-                <option value="">Choose one</option>
-                <option value="kit">A first kit</option>
-                <option value="club">A club launch</option>
-                <option value="build">A more advanced build</option>
-              </select>
+              Ideal cost
+              <input type="range" name="budget" min="1" max="5" value="2" />
+              <div class="slider-row">
+                <span>Low</span>
+                <output data-output="budget">Starter kit</output>
+                <span>Higher</span>
+              </div>
             </label>
+
             <label>
-              Do you already have a launch group?
-              <select name="club" required>
-                <option value="">Choose one</option>
-                <option value="yes">Yes</option>
-                <option value="no">No</option>
-              </select>
+              Experience
+              <input type="range" name="experience" min="0" max="4" value="1" />
+              <div class="slider-row">
+                <span>New</span>
+                <output data-output="experience">Beginner</output>
+                <span>Advanced</span>
+              </div>
             </label>
-            <button type="submit" class="button-primary">Get a recommendation</button>
+
+            <label>
+              Build interest
+              <input type="range" name="build" min="0" max="4" value="2" />
+              <div class="slider-row">
+                <span>Low</span>
+                <output data-output="build">Balanced</output>
+                <span>High</span>
+              </div>
+            </label>
+
+            <label>
+              Electronics interest
+              <input type="range" name="electronics" min="0" max="4" value="1" />
+              <div class="slider-row">
+                <span>Low</span>
+                <output data-output="electronics">Basic</output>
+                <span>High</span>
+              </div>
+            </label>
+
+            <button type="submit" class="button-primary">Show my best next step</button>
           </form>
-          <p id="starter-result" class="form-result" aria-live="polite">Fill out the form to get a simple next step.</p>
+
+          <aside class="card recommendation-card">
+            <p class="eyebrow">Recommended next step</p>
+            <p class="muted">Choose your settings and submit to see a recommendation, the reason for it, and the relevant page links.</p>
+            <div id="starter-results" hidden>
+              <h3 id="starter-result"></h3>
+              <p id="starter-note" class="muted"></p>
+              <ul id="starter-options" class="starter-options"></ul>
+            </div>
+          </aside>
         </div>
       </section>
 
-      <section id="safety" class="section section-block">
-        <div>
-          <p class="kicker">Safety</p>
-          <h2>Keep it simple and safe</h2>
+      <section class="section journey-section">
+        <div class="section-heading">
+          <p class="eyebrow">Journey chart</p>
+          <h2>A simple path from first build to advanced projects.</h2>
         </div>
-        <div class="grid">
-          <article class="card">
-            <h3>Before launch</h3>
-            <ul class="checklist">
-              <li>Check wind and weather</li>
-              <li>Confirm the motor and igniter</li>
-              <li>Set a clear launch area</li>
-            </ul>
-          </article>
-          <article class="card">
-            <h3>After launch</h3>
-            <ul class="checklist">
-              <li>Review recovery damage</li>
-              <li>Inspect the airframe</li>
-              <li>Note what to improve next time</li>
-            </ul>
-          </article>
-        </div>
+        <ol class="journey-chart">
+          <li class="card journey-step">
+            <span>1</span>
+            <h3>Kit</h3>
+            <p>Begin with a starter kit so the process stays guided and approachable.</p>
+          </li>
+          <li class="card journey-step">
+            <span>2</span>
+            <h3>Simulations</h3>
+            <p>Use simulations to understand stability, altitude, and design choices before changing parts.</p>
+          </li>
+          <li class="card journey-step">
+            <span>3</span>
+            <h3>Competitions</h3>
+            <p>Try competition formats once the basics are comfortable and you want a challenge.</p>
+          </li>
+          <li class="card journey-step">
+            <span>4</span>
+            <h3>Certification</h3>
+            <p>Pursue certification paths when you are ready for larger projects and more responsibility.</p>
+          </li>
+          <li class="card journey-step">
+            <span>5</span>
+            <h3>Active Control</h3>
+            <p>Add aerodynamic guidance, airbrakes, thrust vector control, and payload systems once the basics are solid.</p>
+          </li>
+        </ol>
       </section>
 
-      <section id="resources" class="section section-block">
-        <div>
-          <p class="kicker">Resources</p>
-          <h2>Keep a small reference list</h2>
+      <section class="section page-preview">
+        <div class="section-heading">
+          <p class="eyebrow">Main pages</p>
+          <h2>The site stays focused on five clear paths.</h2>
         </div>
-        <div class="grid">
-          <article class="card"><h3>Starter references</h3><p>Keep one or two trusted beginner guides, then add more only when needed.</p></article>
-          <article class="card"><h3>Launch clubs</h3><p>Use a club or organized field whenever possible for your first flights.</p></article>
+        <div class="grid page-links-grid">
+          <a class="card page-card" href="launch.html">
+            <p class="eyebrow">Launch</p>
+            <h3>First flights, launch-day basics, and safety checks</h3>
+            <p>Start here if you want the simplest first path into the hobby.</p>
+          </a>
+          <a class="card page-card" href="build.html">
+            <p class="eyebrow">Build</p>
+            <h3>Kits, tools, and the first rocket build</h3>
+            <p>Use this page for hands-on construction and kit selection.</p>
+          </a>
+          <a class="card page-card" href="simulate.html">
+            <p class="eyebrow">Simulate</p>
+            <h3>Stability, altitude, and flight planning</h3>
+            <p>Check what a design is likely to do before you launch it.</p>
+          </a>
+          <a class="card page-card" href="competitions.html">
+            <p class="eyebrow">Competitions</p>
+            <h3>Beginner competition paths and challenge formats</h3>
+            <p>See how model rocketry expands into team and contest formats.</p>
+          </a>
+          <a class="card page-card" href="electronics.html">
+            <p class="eyebrow">Active Control</p>
+            <h3>Aerodynamic guidance, airbrakes, and thrust vector control</h3>
+            <p>Move into active control after the basics feel comfortable.</p>
+          </a>
         </div>
       </section>
     </main>
