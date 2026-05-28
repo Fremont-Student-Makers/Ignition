@@ -18,7 +18,7 @@ Open `index.html`, `styles.css`, and `main.js` directly in VS Code.
 
 1. Push the repository to GitHub.
 2. In repository settings, enable GitHub Pages from the `main` branch and root folder.
-3. Keep the `CNAME` file at the repo root to use `rocketry.fremontstudentmakers.org`.
+3. Keep the `CNAME` file at the repo root to use `ignition.fremontstudentmakers.org`.
 4. Add the DNS record GitHub Pages asks for in your domain provider.
 5. Wait for DNS propagation, then verify the site.
 
