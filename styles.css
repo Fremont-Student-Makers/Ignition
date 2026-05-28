@@ -195,6 +195,10 @@ main {
   box-shadow: var(--shadow-strong);
 }
 
+.card-actions {
+  margin-top: 0.85rem;
+}
+
 .eyebrow {
   margin: 0 0 0.75rem;
   color: var(--blue);
@@ -208,6 +212,8 @@ main {
   display: grid;
   gap: 1rem;
   align-items: stretch;
+  transform: translateY(-40px);
+
 }
 
 .hero-copy,
@@ -476,6 +482,8 @@ main {
   margin: 0 auto;
   position: relative;
   z-index: 3;
+  background-color: #d93b3b;
+  background: linear-gradient(180deg, rgba(217, 59, 59, 0.16), rgba(255, 255, 255, 0.96));
 }
 
 .control-check-form {

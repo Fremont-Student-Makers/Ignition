@@ -1,8 +1,8 @@
 const pages = [
   { label: "Home", href: "index.html" },
-  { label: "Launch", href: "launch.html" },
   { label: "Build", href: "build.html" },
   { label: "Simulate", href: "simulate.html" },
+  { label: "Launch", href: "launch.html" },
   { label: "Competitions", href: "competitions.html" },
   { label: "Active Control", href: "electronics.html" },
 ];
@@ -75,8 +75,10 @@ function renderFooter() {
 function renderRegionPanel() {
   if (currentPath() === "electronics.html") return;
 
+  if (document.querySelector("[data-region-panel]")) return;
+
+  const hero = document.querySelector(".hero-grid");
   const header = document.getElementById("site-header");
-  if (!header || document.querySelector("[data-region-panel]") ) return;
 
   const panel = document.createElement("section");
   panel.className = "section region-panel";
@@ -102,7 +104,12 @@ function renderRegionPanel() {
     </div>
   `;
 
-  header.insertAdjacentElement("afterend", panel);
+  // Prefer inserting after the hero card; fall back to after the header.
+  if (hero && hero.parentNode) {
+    hero.insertAdjacentElement("afterend", panel);
+  } else if (header) {
+    header.insertAdjacentElement("afterend", panel);
+  }
 }
 
 function getRegionStorageKey() {
