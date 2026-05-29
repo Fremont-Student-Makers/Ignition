@@ -1,3 +1,5 @@
+import { buildSupplierGroups } from "./build-suppliers.js";
+
 const pages = [
   { label: "Home", href: "index.html" },
   { label: "Build", href: "build.html" },
@@ -60,14 +62,15 @@ function renderFooter() {
   const footer = document.getElementById("site-footer");
   if (!footer) return;
 
-  const footerLinks = pages.map((page) => `<a href="${page.href}">${page.label}</a>`).join("");
+  const year = new Date().getFullYear();
 
   footer.innerHTML = `
     <div class="container footer-grid">
       <p>Ignition keeps rocketry simple, beginner-friendly, and easy to navigate.</p>
-      <nav class="footer-nav" aria-label="Footer navigation">
-        ${footerLinks}
-      </nav>
+      <div class="footer-contact">
+        <p>Contact: <a href="mailto:info@fremontstudentmakers.org">info@fremontstudentmakers.org</a></p>
+      </div>
+      <p class="copyright">© ${year} Fremont Student Makers</p>
     </div>
   `;
 }
@@ -110,6 +113,110 @@ function renderRegionPanel() {
   } else if (header) {
     header.insertAdjacentElement("afterend", panel);
   }
+}
+
+function getSupplierLogoUrl(domain) {
+  return `https://logo.clearbit.com/${domain}`;
+}
+
+function getSupplierInitials(name) {
+  return name
+    .split(/\s+/)
+    .map((part) => part[0])
+    .filter(Boolean)
+    .slice(0, 2)
+    .join("")
+    .toUpperCase();
+}
+
+function normalizeText(value) {
+  return String(value || "").toLowerCase().trim();
+}
+
+function supplierMatchesRegion(itemRegions, selectedRegion) {
+  if (selectedRegion === "all") return true;
+  return itemRegions.includes("global") || itemRegions.includes(selectedRegion);
+}
+
+function supplierMatchesQuery(item, query) {
+  if (!query) return true;
+
+  const haystack = [item.name, item.summary, item.delivery, item.domain, ...(item.regions || [])]
+    .join(" ")
+    .toLowerCase();
+
+  return haystack.includes(query);
+}
+
+function renderBuildSuppliers() {
+  if (currentPath() !== "build.html") return;
+
+  const searchInput = document.querySelector("[data-supplier-search]");
+  const regionSelect = document.querySelector("[data-supplier-region]");
+  const countLabel = document.querySelector("[data-supplier-count]");
+  const supplierCards = [];
+
+  buildSupplierGroups.forEach((group) => {
+    const container = document.querySelector(`[data-supplier-group="${group.id}"]`);
+    if (!container) return;
+
+    container.innerHTML = group.items
+      .map((item) => {
+        const initials = getSupplierInitials(item.name);
+        const regions = item.regions.join(",");
+
+        return `
+          <article class="card supplier-card" data-supplier-card data-group="${group.id}" data-name="${item.name}" data-summary="${item.summary}" data-delivery="${item.delivery}" data-regions="${regions}">
+            <a class="supplier-logo" href="${item.href}" target="_blank" rel="noreferrer noopener" aria-label="Visit ${item.name}">
+              <img src="${getSupplierLogoUrl(item.domain)}" alt="${item.name} logo" loading="lazy" onerror="this.hidden=true; this.nextElementSibling.hidden=false" />
+              <span class="supplier-logo-fallback" hidden>${initials}</span>
+            </a>
+            <div class="supplier-body">
+              <a class="supplier-name" href="${item.href}" target="_blank" rel="noreferrer noopener">${item.name}</a>
+              <p class="supplier-delivery">${item.delivery}</p>
+              <p>${item.summary}</p>
+            </div>
+          </article>
+        `;
+      })
+      .join("");
+
+    supplierCards.push(...container.querySelectorAll("[data-supplier-card]"));
+  });
+
+  if (!searchInput || !regionSelect || !countLabel || !supplierCards.length) return;
+
+  const applyFilters = () => {
+    const query = normalizeText(searchInput.value);
+    const region = regionSelect.value;
+    let visibleCount = 0;
+
+    supplierCards.forEach((card) => {
+      const itemRegions = (card.getAttribute("data-regions") || "").split(",").map((value) => value.trim()).filter(Boolean);
+      const matches = supplierMatchesRegion(itemRegions, region) && supplierMatchesQuery(
+        {
+          name: card.getAttribute("data-name"),
+          summary: card.getAttribute("data-summary"),
+          delivery: card.getAttribute("data-delivery"),
+          domain: card.querySelector(".supplier-name")?.textContent || "",
+          regions: itemRegions,
+        },
+        query,
+      );
+
+      card.hidden = !matches;
+      if (matches) visibleCount += 1;
+    });
+
+    countLabel.textContent =
+      visibleCount === supplierCards.length
+        ? `Showing all ${visibleCount} suppliers.`
+        : `Showing ${visibleCount} of ${supplierCards.length} suppliers.`;
+  };
+
+  searchInput.addEventListener("input", applyFilters);
+  regionSelect.addEventListener("change", applyFilters);
+  applyFilters();
 }
 
 function getRegionStorageKey() {
@@ -363,6 +470,10 @@ function wireQuestionnaire() {
 
   syncStarterOutputs(form);
 
+  const aside = form.parentElement?.querySelector(".recommendation-card");
+  const introMuted = aside?.querySelector("p.muted");
+  const reset = form.querySelector("#starter-reset");
+
   const renderOptions = (recommendations) => {
     options.innerHTML = recommendations
       .map(
@@ -383,10 +494,23 @@ function wireQuestionnaire() {
     const primary = recommendations[0];
 
     results.hidden = false;
+    if (introMuted) introMuted.hidden = true;
     result.textContent = primary.title;
     note.textContent = primary.reason;
     renderOptions(recommendations);
   });
+
+  if (reset) {
+    reset.addEventListener("click", () => {
+      form.reset();
+      syncStarterOutputs(form);
+      results.hidden = true;
+      if (introMuted) introMuted.hidden = false;
+      result.textContent = "";
+      note.textContent = "";
+      options.innerHTML = "";
+    });
+  }
 }
 
 function wireActiveControlGate() {
@@ -489,6 +613,7 @@ function wireActiveControlGate() {
 renderNav();
 renderFooter();
 renderRegionPanel();
+renderBuildSuppliers();
 wireQuestionnaire();
 wireRegionFilters();
 wireActiveControlGate();

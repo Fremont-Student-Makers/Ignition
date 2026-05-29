@@ -627,22 +627,138 @@ body[data-page="electronics"] .control-gate-card::before {
 }
 
 .footer-grid {
-  align-items: center;
+  align-items: start;
+  grid-template-columns: 1fr;
 }
 
-.footer-nav {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-}
-
-.footer-nav a {
-  text-decoration: none;
+.footer-contact p,
+.copyright {
+  margin: 0;
   color: var(--muted);
 }
 
-.footer-nav a:hover {
+.footer-contact a {
   color: var(--blue);
+  text-decoration: none;
+}
+
+.footer-contact a:hover {
+  text-decoration: underline;
+}
+
+.supplier-groups {
+  display: grid;
+  gap: 1rem;
+}
+
+.supplier-scroll {
+  padding: 1rem;
+}
+
+.supplier-scroll .supplier-groups {
+  max-height: 72vh;
+  overflow: auto;
+  padding-right: 0.5rem;
+}
+
+.supplier-filters {
+  display: grid;
+  gap: 0.85rem;
+  margin-bottom: 1rem;
+}
+
+.supplier-search,
+.supplier-region {
+  display: grid;
+  gap: 0.4rem;
+  color: var(--text);
+  font-weight: 700;
+}
+
+.supplier-search input,
+.supplier-region select {
+  min-height: 46px;
+  padding: 0.65rem 0.9rem;
+  border-radius: 14px;
+  border: 1px solid var(--line-strong);
+  background: var(--surface-strong);
+  color: var(--text);
+  box-shadow: inset 0 1px 2px rgba(21, 32, 51, 0.04);
+}
+
+.supplier-meta {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.94rem;
+}
+
+.supplier-group {
+  display: grid;
+  gap: 1rem;
+}
+
+.supplier-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 1rem;
+}
+
+.supplier-card {
+  display: grid;
+  grid-template-columns: 56px 1fr;
+  align-items: start;
+  gap: 0.9rem;
+}
+
+.supplier-card[hidden] {
+  display: none !important;
+}
+
+.supplier-logo {
+  width: 56px;
+  height: 56px;
+  border-radius: 14px;
+  border: 1px solid var(--line-strong);
+  background: var(--surface-strong);
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  text-decoration: none;
+}
+
+.supplier-logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: 0.4rem;
+}
+
+.supplier-logo-fallback {
+  color: var(--blue);
+  font-weight: 800;
+}
+
+.supplier-body {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.supplier-name {
+  color: var(--text);
+  text-decoration: none;
+  font-weight: 800;
+  font-size: 1.05rem;
+}
+
+.supplier-name:hover {
+  color: var(--blue);
+}
+
+.supplier-delivery {
+  margin: 0;
+  color: var(--blue);
+  font-size: 0.92rem;
+  font-weight: 700;
 }
 
 .card p,
@@ -689,6 +805,11 @@ input:focus-visible {
     align-items: center;
   }
 
+  .footer-grid {
+    grid-template-columns: 1fr;
+    align-items: start;
+  }
+
   .nav-toggle {
     display: none;
   }
@@ -704,6 +825,15 @@ input:focus-visible {
 
   .region-toolbar {
     grid-template-columns: auto minmax(240px, 320px) 1fr;
+  }
+
+  .supplier-filters {
+    grid-template-columns: minmax(0, 1fr) 260px auto;
+    align-items: end;
+  }
+
+  .supplier-scroll .supplier-groups {
+    max-height: 78vh;
   }
 
   .info-grid,

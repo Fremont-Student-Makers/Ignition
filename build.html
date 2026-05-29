@@ -38,32 +38,6 @@
         </div>
       </section>
 
-      <section class="section info-grid">
-        <article class="card">
-          <p class="eyebrow">Starter kit</p>
-          <h2>The easiest way to begin building</h2>
-          <p>A starter kit gives the user the body tube, fins, recovery system, and motor mount pieces in one place.</p>
-        </article>
-        <article class="card">
-          <p class="eyebrow">Tools</p>
-          <h2>Keep the tool list short</h2>
-          <p>Cutting, sanding, glue, and a clean work surface are enough for the first build. The goal is confidence, not complexity.</p>
-        </article>
-      </section>
-
-      <section class="section page-preview">
-        <div class="section-heading">
-          <p class="eyebrow">Build steps</p>
-          <h2>Focus on assembly, fit, and recovery.</h2>
-        </div>
-        <div class="grid">
-          <article class="card"><h3>Choose a kit</h3><p>Pick one that matches the user’s age, budget, and comfort with simple assembly.</p></article>
-          <article class="card"><h3>Assemble carefully</h3><p>Dry-fit parts before glue, then follow the sequence from the instructions.</p></article>
-          <article class="card"><h3>Prepare recovery</h3><p>Pack the recovery system correctly so the first launch remains easy to inspect and recover.</p></article>
-          <article class="card"><h3>Finish cleanly</h3><p>Paint or mark the rocket once the structure is complete and verified.</p></article>
-        </div>
-      </section>
-
       <nav class="section toc">
         <h3>On this page</h3>
         <ul>
@@ -108,24 +82,73 @@
         <div class="section-heading">
           <p class="eyebrow">Suppliers</p>
           <h2>Where to buy parts and motors</h2>
+          <p class="muted">These cards are generated from a single data file, so adding or removing stores later is quick.</p>
         </div>
-        <div class="grid">
-          <article class="card" data-region-item data-regions="global">
-            <h3>General hobby shops</h3>
-            <p>Good for adhesives, paint, sandpaper, cutting tools, and basic build supplies anywhere.</p>
-          </article>
-          <article class="card" data-region-item data-regions="us">
-            <h3>United States suppliers</h3>
-            <p>List U.S. motor and kit suppliers here. These are useful when shipping and motor certification match the region.</p>
-          </article>
-          <article class="card" data-region-item data-regions="eu,uk">
-            <h3>Europe and UK suppliers</h3>
-            <p>Show suppliers that actually ship to Europe or the UK and support local regulations.</p>
-          </article>
-          <article class="card" data-region-item data-regions="ca,au">
-            <h3>Canada and Australia / New Zealand</h3>
-            <p>Use this card for region-appropriate shipping, motor availability, and hobby retailers.</p>
-          </article>
+        <div class="supplier-filters card">
+          <label class="supplier-search">
+            <span>Search suppliers</span>
+            <input type="search" data-supplier-search placeholder="Search by store, item, or description" />
+          </label>
+          <label class="supplier-region">
+            <span>Filter by region</span>
+            <select data-supplier-region>
+              <option value="all">All regions</option>
+              <option value="global">International / global</option>
+              <option value="us">United States</option>
+              <option value="ca">Canada</option>
+              <option value="uk">United Kingdom</option>
+              <option value="eu">Europe</option>
+              <option value="in">India</option>
+              <option value="au">Australia / New Zealand</option>
+            </select>
+          </label>
+          <p class="supplier-meta" data-supplier-count>Showing all suppliers.</p>
+        </div>
+        <div class="supplier-scroll card">
+          <div class="supplier-groups">
+            <article class="supplier-group">
+              <div class="section-heading">
+                <p class="eyebrow">Parts</p>
+                <h3>Kits, tools, and build materials</h3>
+              </div>
+              <div class="supplier-grid" data-supplier-group="parts"></div>
+            </article>
+            <article class="supplier-group">
+              <div class="section-heading">
+                <p class="eyebrow">Launch gear</p>
+                <h3>Launch pads, controllers, and recovery gear</h3>
+              </div>
+              <div class="supplier-grid" data-supplier-group="launch"></div>
+            </article>
+            <article class="supplier-group">
+              <div class="section-heading">
+                <p class="eyebrow">Motors</p>
+                <h3>Low-power through high-power motor stores</h3>
+              </div>
+              <div class="supplier-grid" data-supplier-group="motors"></div>
+            </article>
+            <article class="supplier-group">
+              <div class="section-heading">
+                <p class="eyebrow">Adhesives</p>
+                <h3>Glue, filler, paint, and finishing supplies</h3>
+              </div>
+              <div class="supplier-grid" data-supplier-group="adhesives"></div>
+            </article>
+            <article class="supplier-group">
+              <div class="section-heading">
+                <p class="eyebrow">Kits</p>
+                <h3>Starter kits for newer builders</h3>
+              </div>
+              <div class="supplier-grid" data-supplier-group="kits"></div>
+            </article>
+            <article class="supplier-group">
+              <div class="section-heading">
+                <p class="eyebrow">International</p>
+                <h3>Stores with broader shipping coverage</h3>
+              </div>
+              <div class="supplier-grid" data-supplier-group="international"></div>
+            </article>
+          </div>
         </div>
       </section>
 
