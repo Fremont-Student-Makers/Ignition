@@ -610,6 +610,101 @@ function wireActiveControlGate() {
   });
 }
 
+function initHeroCarousel() {
+  const setup = () => {
+    const hero = document.querySelector('.hero-grid');
+    if (!hero) return;
+    const grid = hero.querySelector('.photo-grid');
+    if (!grid) return;
+
+    const isMobile = window.matchMedia('(max-width:699px)').matches;
+
+    if (isMobile && !grid.dataset.carousel) {
+      grid.dataset.carousel = 'true';
+      grid.classList.add('photo-carousel');
+
+      const controls = document.createElement('div');
+      controls.className = 'photo-carousel-controls';
+      controls.innerHTML = `
+        <button class="carousel-prev" aria-label="Previous image">‹</button>
+        <div class="carousel-dots" role="tablist"></div>
+        <button class="carousel-next" aria-label="Next image">›</button>
+      `;
+
+      hero.appendChild(controls);
+
+      const slides = Array.from(grid.querySelectorAll('.photo-slot'));
+      const dotsContainer = controls.querySelector('.carousel-dots');
+
+      slides.forEach((s, i) => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'carousel-dot';
+        btn.dataset.index = i;
+        btn.setAttribute('aria-label', `Go to slide ${i + 1}`);
+        dotsContainer.appendChild(btn);
+      });
+
+      const dots = Array.from(dotsContainer.children);
+
+      const updateActive = (index) => {
+        grid.dataset.active = index;
+        dots.forEach((d, i) => d.classList.toggle('is-active', i === index));
+      };
+
+      const scrollToIndex = (index) => {
+        const slide = slides[index];
+        if (!slide) return;
+        grid.scrollTo({ left: slide.offsetLeft - grid.offsetLeft, behavior: 'smooth' });
+        updateActive(index);
+      };
+
+      controls.querySelector('.carousel-prev').addEventListener('click', () => {
+        const current = Number(grid.dataset.active || 0);
+        scrollToIndex(Math.max(0, current - 1));
+      });
+
+      controls.querySelector('.carousel-next').addEventListener('click', () => {
+        const current = Number(grid.dataset.active || 0);
+        scrollToIndex(Math.min(slides.length - 1, current + 1));
+      });
+
+      dots.forEach((dot) => {
+        dot.addEventListener('click', () => scrollToIndex(Number(dot.dataset.index)));
+      });
+
+      let scrollTimer;
+      grid.addEventListener('scroll', () => {
+        clearTimeout(scrollTimer);
+        scrollTimer = setTimeout(() => {
+          const scrollLeft = grid.scrollLeft;
+          let best = 0;
+          let bestDiff = Infinity;
+          slides.forEach((s, i) => {
+            const diff = Math.abs(s.offsetLeft - grid.offsetLeft - scrollLeft);
+            if (diff < bestDiff) { bestDiff = diff; best = i; }
+          });
+          updateActive(best);
+        }, 80);
+      });
+
+      updateActive(0);
+    } else if (!isMobile && grid.dataset.carousel) {
+      // teardown
+      delete grid.dataset.carousel;
+      grid.classList.remove('photo-carousel');
+      const controls = hero.querySelector('.photo-carousel-controls');
+      if (controls) controls.remove();
+      grid.removeAttribute('style');
+    }
+  };
+
+  window.addEventListener('resize', setup);
+  document.addEventListener('DOMContentLoaded', setup);
+  // run once immediately
+  setup();
+}
+
 renderNav();
 renderFooter();
 renderRegionPanel();
@@ -617,3 +712,4 @@ renderBuildSuppliers();
 wireQuestionnaire();
 wireRegionFilters();
 wireActiveControlGate();
+initHeroCarousel();

@@ -874,6 +874,50 @@ input:focus-visible {
   }
 }
 
+/* Mobile: slide-in right-side navigation and fixed hamburger */
+@media (max-width: 899px) {
+  .nav-toggle {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    z-index: 1400;
+    box-shadow: 0 10px 30px rgba(21,32,51,0.12);
+  }
+
+  .main-nav {
+    display: flex !important;
+    flex-direction: column;
+    align-items: start;
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100vh;
+    width: min(360px, 86vw);
+    padding: 3.5rem 1.25rem 1.25rem;
+    gap: 1rem;
+    background: var(--surface-strong);
+    border-left: 1px solid var(--line-strong);
+    box-shadow: -12px 0 40px rgba(21,32,51,0.12);
+    transform: translateX(100%);
+    transition: transform 260ms cubic-bezier(.2,.9,.2,1);
+    z-index: 1300;
+  }
+
+  .main-nav.is-open {
+    transform: translateX(0);
+  }
+
+  .main-nav a.nav-link {
+    width: 100%;
+    padding: 0.9rem 0.85rem;
+    border-radius: 10px;
+    justify-content: flex-start;
+  }
+
+  /* Ensure the nav content is scrollable if long */
+  .main-nav { overflow-y: auto; -webkit-overflow-scrolling: touch; }
+}
+
 @media (max-width: 699px) {
   .photo-grid {
     grid-template-columns: 1fr;
@@ -881,5 +925,58 @@ input:focus-visible {
 
   .photo-slot-large {
     min-height: 220px;
+  }
+
+  /* Mobile hero image carousel styles */
+  .photo-grid.photo-carousel {
+    display: flex;
+    gap: 0.75rem;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 0.5rem;
+  }
+
+  .photo-grid.photo-carousel .photo-slot {
+    flex: 0 0 86%;
+    min-width: 86%;
+    scroll-snap-align: center;
+  }
+
+  .photo-carousel-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    padding: 0.6rem 0 0;
+  }
+
+  .photo-carousel-controls .carousel-prev,
+  .photo-carousel-controls .carousel-next {
+    background: var(--surface-strong);
+    border: 1px solid var(--line-strong);
+    padding: 0.45rem 0.7rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 700;
+  }
+
+  .photo-carousel-controls .carousel-dots {
+    display: flex;
+    gap: 0.45rem;
+    align-items: center;
+  }
+
+  .carousel-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 999px;
+    background: rgba(19,32,54,0.12);
+    border: 0;
+    padding: 0;
+  }
+
+  .carousel-dot.is-active {
+    background: var(--blue);
   }
 }
