@@ -39,7 +39,9 @@ function renderNav() {
 
   header.innerHTML = `
     <div class="container header-grid">
-      <a class="brand" href="index.html">Ignition</a>
+      <button class="button-logo" type="button" href="index.html" aria-label="Go to homepage">
+        <img class="logo" src="brand.svg" alt="Ignition logo" />
+      </button>
       <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
         <span></span><span></span><span></span>
         <span class="sr-only">Toggle navigation</span>
