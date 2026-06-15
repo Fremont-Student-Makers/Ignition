@@ -440,23 +440,28 @@ function syncStarterOutputs(form) {
     electronics: form.querySelector('[data-output="electronics"]'),
   };
 
+  const getAgeLabel = () => {
+    const selected = form.querySelector('input[type="radio"][name="age"]:checked');
+    return selected?.dataset.ageLabel || "High School";
+  };
+
   const update = () => {
     const data = new FormData(form);
-    const age = Number(data.get("age") || 13);
     const budget = Number(data.get("budget") || 2);
     const experience = Number(data.get("experience") || 1);
     const build = Number(data.get("build") || 2);
     const electronics = Number(data.get("electronics") || 1);
 
-    if (outputs.age) outputs.age.textContent = `${age}`;
+    if (outputs.age) outputs.age.textContent = getAgeLabel(age);
     if (outputs.budget) outputs.budget.textContent = getBudgetLabel(budget);
     if (outputs.experience) outputs.experience.textContent = getExperienceLabel(experience);
     if (outputs.build) outputs.build.textContent = getInterestLabel(build);
     if (outputs.electronics) outputs.electronics.textContent = getInterestLabel(electronics);
   };
 
-  form.querySelectorAll('input[type="range"]').forEach((input) => {
+  form.querySelectorAll('input[type="range"], input[type="radio"][name="age"]').forEach((input) => {
     input.addEventListener("input", update);
+    input.addEventListener("change", update);
   });
 
   update();

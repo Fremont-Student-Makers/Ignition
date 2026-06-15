@@ -66,15 +66,52 @@
 
         <div class="starter-layout">
           <form id="starter-form" class="card slider-card">
-            <label>
-              Age
-              <input type="range" name="age" min="8" max="21" value="13" />
-              <div class="slider-row">
-                <span>8</span>
-                <output data-output="age">13</output>
-                <span>21+</span>
+            <fieldset class="age-fieldset">
+              <legend>Age</legend>
+              <div class="age-options" role="radiogroup" aria-label="Age range">
+                <label class="age-option age-option--preschool" style="--age-accent: #f97316;">
+                  <input type="radio" name="age" value="preschool" data-age-label="Preschool" />
+                  <span>Preschool</span>
+                </label>
+                <label class="age-option age-option--elementary" style="--age-accent: #22c55e;">
+                  <input type="radio" name="age" value="elementary" data-age-label="Elementary" />
+                  <span>Elementary</span>
+                </label>
+                <label class="age-option age-option--middle" style="--age-accent: #06b6d4;">
+                  <input type="radio" name="age" value="middle-school" data-age-label="Middle School" />
+                  <span>Middle School</span>
+                </label>
+                <label class="age-option age-option--high" style="--age-accent: #f43f5e;">
+                  <input type="radio" name="age" value="high-school" data-age-label="High School" checked />
+                  <span>High School</span>
+                </label>
+                <label class="age-option age-option--college" style="--age-accent: #8b5cf6;">
+                  <input type="radio" name="age" value="college" data-age-label="College" />
+                  <span>College</span>
+                </label>
+                <label class="age-option age-option--young-adult" style="--age-accent: #0ea5e9;">
+                  <input type="radio" name="age" value="young-adult" data-age-label="Young Adult" />
+                  <span>Young Adult</span>
+                </label>
+                <label class="age-option age-option--adult" style="--age-accent: #14b8a6;">
+                  <input type="radio" name="age" value="adult" data-age-label="Adult" />
+                  <span>Adult</span>
+                </label>
+                <label class="age-option age-option--midlife" style="--age-accent: #d97706;">
+                  <input type="radio" name="age" value="midlife" data-age-label="Midlife" />
+                  <span>Midlife</span>
+                </label>
+                <label class="age-option age-option--senior" style="--age-accent: #64748b;">
+                  <input type="radio" name="age" value="senior" data-age-label="Senior" />
+                  <span>Senior</span>
+                </label>
               </div>
-            </label>
+              <div class="slider-row">
+                <span>Early years</span>
+                <output data-output="age">High School</output>
+                <span>Later years</span>
+              </div>
+            </fieldset>
 
             <label>
               Ideal cost
@@ -126,7 +163,7 @@
             <div id="starter-results" hidden>
               <h3 id="starter-result"></h3>
               <p id="starter-note" class="muted"></p>
-              <ul id="starter-options" class="starter-options"></ul>
+              <ol id="starter-options" class="starter-options"></ol>
             </div>
           </aside>
         </div>
