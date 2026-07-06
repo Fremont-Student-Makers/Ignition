@@ -2,6 +2,7 @@ import { buildSupplierGroups } from "./build-suppliers.js";
 
 const pages = [
   { label: "Home", href: "index.html" },
+  { label: "Articles", href: "articles.html" },
   { label: "Build", href: "build.html" },
   { label: "Simulate", href: "simulate.html" },
   { label: "Launch", href: "launch.html" },
@@ -19,6 +20,125 @@ const regionLabels = {
   in: "India",
   au: "Australia / New Zealand",
 };
+
+const siteSearchIndex = [
+  {
+    title: "How do I get started?",
+    section: "Home",
+    summary: "Use the starter form to choose an age group, budget, experience level, and interest level.",
+    href: "index.html#start",
+    keywords: ["start", "begin", "starter", "first rocket", "how to get started"],
+    prompts: ["How do I get started?", "What should I do first?", "Which path is right for me?"],
+    featured: true,
+  },
+  {
+    title: "Will this rocket work?",
+    section: "Articles",
+    summary: "Check stability, motor fit, and recovery before you build too far.",
+    href: "articles.html#article-rocket-work",
+    keywords: ["work", "fly", "stability", "motor fit", "recovery", "will this rocket work"],
+    prompts: ["Will this rocket work?", "How do I know it will fly?", "Is the design good enough?"],
+    featured: true,
+  },
+  {
+    title: "Why didn't my rocket fly straight?",
+    section: "Articles",
+    summary: "There are several possible causes, including wind, launch setup, balance, and fin issues.",
+    href: "articles.html#article-fly-straight",
+    keywords: ["straight", "drift", "wind", "alignment", "balance", "why didn't my rocket fly straight"],
+    prompts: ["Why didn't my rocket fly straight?", "Why did it curve?", "Why did it drift off course?"],
+    featured: true,
+  },
+  {
+    title: "Is it legal to launch this?",
+    section: "Articles",
+    summary: "Check local launch rules, club rules, and aviation guidance before flying.",
+    href: "articles.html#article-legal-launch",
+    keywords: ["legal", "launch", "rules", "aviation", "permission", "can i launch this"],
+    prompts: ["Is it legal to launch this?", "Where can I launch?", "Do I need permission?"],
+  },
+  {
+    title: "What motor should I use?",
+    section: "Articles",
+    summary: "Match the motor to the rocket, the field, and your experience level.",
+    href: "articles.html#article-motor-choice",
+    keywords: ["motor", "motor choice", "what motor should i use", "engine", "thrust"],
+    prompts: ["What motor should I use?", "Which motor fits this rocket?", "How do I choose a motor?"],
+  },
+  {
+    title: "Why did it come down hard?",
+    section: "Articles",
+    summary: "Recovery problems usually come from packing, ejection, or an undersized recovery system.",
+    href: "articles.html#article-hard-landing",
+    keywords: ["hard landing", "recovery", "parachute", "ejection", "came down hard"],
+    prompts: ["Why did it come down hard?", "Why did it land hard?", "Why didn't the parachute work?"],
+  },
+  {
+    title: "What glue should I use?",
+    section: "Articles",
+    summary: "Use beginner-friendly glue for most kits, then move up only when the joint needs it.",
+    href: "articles.html#article-glue",
+    keywords: ["glue", "adhesive", "pva", "epoxy", "ca", "what glue should i use"],
+    prompts: ["What glue should I use?", "Which glue is best for fins?", "What adhesive do I need?"],
+  },
+  {
+    title: "Where do I buy parts?",
+    section: "Articles",
+    summary: "The supplier list groups kits, launch gear, motors, and finishing supplies.",
+    href: "articles.html#article-supplies",
+    keywords: ["parts", "suppliers", "buy", "kit", "where do i buy parts"],
+    prompts: ["Where do I buy parts?", "Where can I get a starter kit?", "Where do I find motors?"],
+  },
+  {
+    title: "Where should I launch?",
+    section: "Launch",
+    summary: "Use a safe, legal open field, club range, or approved launch site.",
+    href: "launch.html#where-to-launch",
+    keywords: ["launch", "field", "range", "where should i launch", "site"],
+    prompts: ["Where should I launch?", "What field should I use?", "Where is a safe launch site?"],
+  },
+  {
+    title: "How do I keep fins straight?",
+    section: "Build",
+    summary: "Use a fin jig, tape, or a simple alignment block while the glue cures.",
+    href: "build.html#alignment-jigs",
+    keywords: ["fins", "straight", "alignment", "jig", "build quality"],
+    prompts: ["How do I keep fins straight?", "How do I align fins?", "How do I stop fins from shifting?"],
+  },
+  {
+    title: "How do I know a rocket will fly well?",
+    section: "Simulate",
+    summary: "Simulation helps you check stability, altitude, motor fit, and recovery.",
+    href: "simulate.html#simulation-topics",
+    keywords: ["simulate", "stability", "altitude", "motor fit", "recovery"],
+    prompts: ["How do I know a rocket will fly well?", "Should I simulate it?", "What should I check before launch?"],
+  },
+  {
+    title: "When should I try competitions?",
+    section: "Competitions",
+    summary: "Competition formats make more sense once the basics feel comfortable.",
+    href: "competitions.html#competition-options",
+    keywords: ["competition", "challenge", "team", "contest", "when should i try competitions"],
+    prompts: ["When should I try competitions?", "Is competition too advanced?", "What competition should I start with?"],
+  },
+  {
+    title: "What if I want electronics or control?",
+    section: "Active Control",
+    summary: "Active control is advanced and should come after launch, build, and simulation basics.",
+    href: "electronics.html#active-control-gate",
+    keywords: ["electronics", "control", "active control", "advanced", "airbrakes"],
+    prompts: ["What if I want electronics or control?", "Is active control too advanced?", "Should I start with electronics?"],
+  },
+];
+
+const featuredSearchPrompts = [
+  "Will this rocket work?",
+  "Why didn't my rocket fly straight?",
+  "Is it legal to launch this?",
+  "What motor should I use?",
+  "How do I keep fins straight?",
+  "How do I know a rocket will fly well?",
+];
 
 function currentPath() {
   const path = window.location.pathname.split("/").pop() || "index.html";
@@ -77,8 +197,130 @@ function renderFooter() {
   `;
 }
 
+function getSearchSuggestions(itemList) {
+  const suggestions = [];
+  const seen = new Set();
+
+  itemList.forEach((item) => {
+    (item.prompts || []).forEach((prompt) => {
+      const key = normalizeText(prompt);
+      if (seen.has(key)) return;
+      seen.add(key);
+      suggestions.push(prompt);
+    });
+  });
+
+  return suggestions.slice(0, 6);
+}
+
+function scoreSearchItem(item, query) {
+  const normalizedQuery = normalizeText(query);
+  if (!normalizedQuery) return item.featured ? 1 : 0;
+
+  const queryTokens = normalizedQuery.split(/\s+/).filter(Boolean);
+  const haystack = [item.title, item.section, item.summary, ...(item.keywords || []), ...(item.prompts || [])]
+    .join(" ")
+    .toLowerCase();
+
+  let score = 0;
+
+  if (haystack.includes(normalizedQuery)) score += 30;
+
+  queryTokens.forEach((token) => {
+    if (token.length < 2) return;
+    if (haystack.includes(token)) score += 8;
+  });
+
+  (item.keywords || []).forEach((keyword) => {
+    const normalizedKeyword = normalizeText(keyword);
+    if (normalizedKeyword && normalizedQuery.includes(normalizedKeyword)) score += 12;
+  });
+
+  return score;
+}
+
+function searchSite(query) {
+  const normalizedQuery = normalizeText(query);
+
+  return siteSearchIndex
+    .map((item) => ({
+      ...item,
+      score: scoreSearchItem(item, normalizedQuery),
+    }))
+    .filter((item) => item.score > 0 || !normalizedQuery)
+    .sort((left, right) => right.score - left.score || left.title.localeCompare(right.title));
+}
+
+function renderHomeSearch() {
+  if (currentPath() !== "index.html") return;
+
+  const input = document.querySelector("[data-site-search]");
+  const results = document.querySelector("[data-search-results]");
+  const suggestions = document.querySelector("[data-search-suggestions]");
+  const countLabel = document.querySelector("[data-search-count]");
+
+  if (!input || !results || !suggestions || !countLabel) return;
+
+  const makeSuggestionButton = (label) => `<button type="button" class="search-chip" data-search-prompt="${label.replaceAll('"', '&quot;')}">${label}</button>`;
+
+  const setSuggestions = (items) => {
+    const prompts = getSearchSuggestions(items);
+    suggestions.innerHTML = prompts.length
+      ? prompts.map((prompt) => makeSuggestionButton(prompt)).join("")
+      : featuredSearchPrompts.map((prompt) => makeSuggestionButton(prompt)).join("");
+
+    suggestions.querySelectorAll("[data-search-prompt]").forEach((button) => {
+      button.addEventListener("click", () => {
+        input.value = button.getAttribute("data-search-prompt") || "";
+        update();
+      });
+    });
+  };
+
+  const renderResults = (items, query) => {
+    if (!items.length) {
+      results.innerHTML = `
+        <div class="search-empty card">
+          <h3>No exact match yet</h3>
+          <p class="muted">Try one of the prompts above, or search for a broader term like launch, build, simulate, or legal.</p>
+        </div>
+      `;
+      countLabel.textContent = `No exact matches for "${query}".`;
+      return;
+    }
+
+    results.innerHTML = items.slice(0, 6).map((item) => `
+      <article class="card search-result-card">
+        <div class="search-result-meta">
+          <p class="eyebrow">${item.section}</p>
+          <h3>${item.title}</h3>
+        </div>
+        <p>${item.summary}</p>
+        <a class="button-secondary search-result-link" href="${item.href}">Open</a>
+      </article>
+    `).join("");
+
+    countLabel.textContent = query
+      ? `Showing ${Math.min(items.length, 6)} result${items.length === 1 ? "" : "s"} for "${query}".`
+      : "Showing popular prompts from across the site.";
+  };
+
+  const update = () => {
+    const query = input.value.trim();
+    const matches = searchSite(query);
+
+    setSuggestions(matches.length ? matches : siteSearchIndex.filter((item) => item.featured));
+    renderResults(matches, query);
+  };
+
+  input.addEventListener("input", update);
+  setSuggestions(siteSearchIndex.filter((item) => item.featured));
+  renderResults(searchSite(""), "");
+}
+
 function renderRegionPanel() {
-  if (currentPath() === "electronics.html") return;
+  const path = currentPath();
+  if (path === "electronics.html" || path === "articles.html") return;
 
   if (document.querySelector("[data-region-panel]")) return;
 
@@ -323,7 +565,6 @@ function chooseRoute(formData) {
   const electronics = Number(formData.get("electronics") || 0);
   const experience = Number(formData.get("experience") || 0);
   const budget = Number(formData.get("budget") || 1);
-  const age = Number(formData.get("age") || 13);
 
   const recommendations = [];
 
@@ -440,9 +681,10 @@ function syncStarterOutputs(form) {
     electronics: form.querySelector('[data-output="electronics"]'),
   };
 
+  const ageSelect = form.querySelector('select[name="age"]');
+
   const getAgeLabel = () => {
-    const selected = form.querySelector('input[type="radio"][name="age"]:checked');
-    return selected?.dataset.ageLabel || "High School";
+    return ageSelect?.selectedOptions?.[0]?.textContent?.trim() || "High School";
   };
 
   const update = () => {
@@ -452,14 +694,14 @@ function syncStarterOutputs(form) {
     const build = Number(data.get("build") || 2);
     const electronics = Number(data.get("electronics") || 1);
 
-    if (outputs.age) outputs.age.textContent = getAgeLabel(age);
+    if (outputs.age) outputs.age.textContent = getAgeLabel();
     if (outputs.budget) outputs.budget.textContent = getBudgetLabel(budget);
     if (outputs.experience) outputs.experience.textContent = getExperienceLabel(experience);
     if (outputs.build) outputs.build.textContent = getInterestLabel(build);
     if (outputs.electronics) outputs.electronics.textContent = getInterestLabel(electronics);
   };
 
-  form.querySelectorAll('input[type="range"], input[type="radio"][name="age"]').forEach((input) => {
+  form.querySelectorAll('input[type="range"], select[name="age"]').forEach((input) => {
     input.addEventListener("input", update);
     input.addEventListener("change", update);
   });
@@ -714,6 +956,7 @@ function initHeroCarousel() {
 
 renderNav();
 renderFooter();
+renderHomeSearch();
 renderRegionPanel();
 renderBuildSuppliers();
 wireQuestionnaire();

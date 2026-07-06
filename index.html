@@ -56,6 +56,24 @@
         </div>
       </section>
 
+      <section id="search" class="section search-section">
+        <div class="section-heading">
+          <p class="eyebrow">Search</p>
+          <h2>Search the whole site by question or topic.</h2>
+          <p class="muted">Type a quick question and get direct matches plus similar prompts you can try next.</p>
+        </div>
+
+        <div class="card search-card">
+          <label class="site-search">
+            <span>Search the website</span>
+            <input type="search" data-site-search placeholder='Try "Will this rocket work?"' autocomplete="off" />
+          </label>
+          <div class="search-suggestion-row" data-search-suggestions></div>
+          <p class="search-meta" data-search-count>Showing popular prompts from across the site.</p>
+          <div class="search-results" data-search-results></div>
+        </div>
+      </section>
+
     
 
       <section id="start" class="section start-section">
@@ -68,48 +86,20 @@
           <form id="starter-form" class="card slider-card">
             <fieldset class="age-fieldset">
               <legend>Age</legend>
-              <div class="age-options" role="radiogroup" aria-label="Age range">
-                <label class="age-option age-option--preschool" style="--age-accent: #f97316;">
-                  <input type="radio" name="age" value="preschool" data-age-label="Preschool" />
-                  <span>Preschool</span>
-                </label>
-                <label class="age-option age-option--elementary" style="--age-accent: #22c55e;">
-                  <input type="radio" name="age" value="elementary" data-age-label="Elementary" />
-                  <span>Elementary</span>
-                </label>
-                <label class="age-option age-option--middle" style="--age-accent: #06b6d4;">
-                  <input type="radio" name="age" value="middle-school" data-age-label="Middle School" />
-                  <span>Middle School</span>
-                </label>
-                <label class="age-option age-option--high" style="--age-accent: #f43f5e;">
-                  <input type="radio" name="age" value="high-school" data-age-label="High School" checked />
-                  <span>High School</span>
-                </label>
-                <label class="age-option age-option--college" style="--age-accent: #8b5cf6;">
-                  <input type="radio" name="age" value="college" data-age-label="College" />
-                  <span>College</span>
-                </label>
-                <label class="age-option age-option--young-adult" style="--age-accent: #0ea5e9;">
-                  <input type="radio" name="age" value="young-adult" data-age-label="Young Adult" />
-                  <span>Young Adult</span>
-                </label>
-                <label class="age-option age-option--adult" style="--age-accent: #14b8a6;">
-                  <input type="radio" name="age" value="adult" data-age-label="Adult" />
-                  <span>Adult</span>
-                </label>
-                <label class="age-option age-option--midlife" style="--age-accent: #d97706;">
-                  <input type="radio" name="age" value="midlife" data-age-label="Midlife" />
-                  <span>Midlife</span>
-                </label>
-                <label class="age-option age-option--senior" style="--age-accent: #64748b;">
-                  <input type="radio" name="age" value="senior" data-age-label="Senior" />
-                  <span>Senior</span>
-                </label>
-              </div>
+              <label class="age-select">
+                <span>Choose an age group</span>
+                <select name="age" data-age-select>
+                  <option value="elementary">Elementary</option>
+                  <option value="middle-school">Middle School</option>
+                  <option value="high-school" selected>High School</option>
+                  <option value="college">College</option>
+                  <option value="adult">Adult</option>
+                </select>
+              </label>
               <div class="slider-row">
-                <span>Early years</span>
+                <span>Current selection</span>
                 <output data-output="age">High School</output>
-                <span>Later years</span>
+                <span>Used for recommendations</span>
               </div>
             </fieldset>
 
@@ -203,37 +193,93 @@
         </ol>
       </section>
 
-      <section class="section page-preview">
+      <section id="faqs" class="section faq-section">
         <div class="section-heading">
-          <p class="eyebrow">Main pages</p>
-          <h2>The site stays focused on five clear paths.</h2>
+          <p class="eyebrow">FAQs</p>
+          <h2>Quick answers with direct links to the right section.</h2>
         </div>
-        <div class="grid page-links-grid">
-          <a class="card page-card" href="launch.html">
-            <p class="eyebrow">Launch</p>
-            <h3>First flights, launch-day basics, and safety checks</h3>
-            <p>Start here if you want the simplest first path into the hobby.</p>
-          </a>
-          <a class="card page-card" href="build.html">
-            <p class="eyebrow">Build</p>
-            <h3>Kits, tools, and the first rocket build</h3>
-            <p>Use this page for hands-on construction and kit selection.</p>
-          </a>
-          <a class="card page-card" href="simulate.html">
-            <p class="eyebrow">Simulate</p>
-            <h3>Stability, altitude, and flight planning</h3>
-            <p>Check what a design is likely to do before you launch it.</p>
-          </a>
-          <a class="card page-card" href="competitions.html">
-            <p class="eyebrow">Competitions</p>
-            <h3>Beginner competition paths and challenge formats</h3>
-            <p>See how model rocketry expands into team and contest formats.</p>
-          </a>
-          <a class="card page-card" href="electronics.html">
-            <p class="eyebrow">Active Control</p>
-            <h3>Aerodynamic guidance, airbrakes, and thrust vector control</h3>
-            <p>Move into active control after the basics feel comfortable.</p>
-          </a>
+        <div class="grid faq-grid">
+          <article class="card faq-card">
+            <p class="eyebrow">Getting started</p>
+            <h3>Where should I start first?</h3>
+            <p>Begin with launch if you want the safest overview of field setup, first flights, and what a clean launch day looks like.</p>
+            <div class="card-actions">
+              <a class="button-primary" href="launch.html#where-to-launch">Launch basics</a>
+              <a class="button-secondary" href="#start">Use the starter form</a>
+            </div>
+          </article>
+          <article class="card faq-card">
+            <p class="eyebrow">Kits</p>
+            <h3>Which kit should I buy first?</h3>
+            <p>Starter kits keep the first build simple, affordable, and easy to recover while you learn the basics.</p>
+            <div class="card-actions">
+              <a class="button-primary" href="build.html#recommended-kits">Recommended kits</a>
+              <a class="button-secondary" href="build.html#how-to-start">How to start</a>
+            </div>
+          </article>
+          <article class="card faq-card">
+            <p class="eyebrow">Tools</p>
+            <h3>What tools do I actually need?</h3>
+            <p>A short list is enough for most beginner kits: knife, sandpaper, glue, clamps or tape, and a ruler.</p>
+            <div class="card-actions">
+              <a class="button-primary" href="build.html#how-to-start">Basic tool list</a>
+              <a class="button-secondary" href="build.html#adhesives">Glue choices</a>
+            </div>
+          </article>
+          <article class="card faq-card">
+            <p class="eyebrow">Suppliers</p>
+            <h3>Where do I find parts and motors?</h3>
+            <p>The supplier section groups kit stores, launch gear, motor vendors, and finishing supplies in one place.</p>
+            <div class="card-actions">
+              <a class="button-primary" href="build.html#suppliers">Supplier list</a>
+              <a class="button-secondary" href="build.html#3d-printing">Printed parts</a>
+            </div>
+          </article>
+          <article class="card faq-card">
+            <p class="eyebrow">Build quality</p>
+            <h3>How do I keep fins straight?</h3>
+            <p>Use a fin jig, tape, or a simple alignment block so the airframe stays square while the glue cures.</p>
+            <div class="card-actions">
+              <a class="button-primary" href="build.html#alignment-jigs">Alignment jigs</a>
+              <a class="button-secondary" href="build.html#adhesives">Adhesives</a>
+            </div>
+          </article>
+          <article class="card faq-card">
+            <p class="eyebrow">Planning</p>
+            <h3>How do I know a rocket will fly well?</h3>
+            <p>Simulation helps you check stability, altitude, motor fit, and recovery before you commit to a launch.</p>
+            <div class="card-actions">
+              <a class="button-primary" href="simulate.html#simulation-topics">Simulation topics</a>
+              <a class="button-secondary" href="simulate.html#why-simulate">Why simulate</a>
+            </div>
+          </article>
+          <article class="card faq-card">
+            <p class="eyebrow">Challenge</p>
+            <h3>When should I try competitions?</h3>
+            <p>Once the basics feel comfortable, competition formats add goals, teamwork, and a stronger project focus.</p>
+            <div class="card-actions">
+              <a class="button-primary" href="competitions.html#competition-options">Competition options</a>
+              <a class="button-secondary" href="competitions.html">Competition overview</a>
+            </div>
+          </article>
+          <article class="card faq-card">
+            <p class="eyebrow">Advanced</p>
+            <h3>What if I want electronics or control?</h3>
+            <p>Active control is advanced work, so start there only after you understand launch, build, and simulation basics.</p>
+            <div class="card-actions">
+              <a class="button-primary" href="electronics.html#active-control-gate">Active control gate</a>
+              <a class="button-secondary" href="electronics.html">Active control page</a>
+            </div>
+          </article>
+          <article class="card faq-card">
+            <p class="eyebrow">Articles</p>
+            <h3>Want the common questions in one place?</h3>
+            <p>Read the short answer pages for the questions people ask most often before and after a launch.</p>
+            <div class="card-actions">
+              <a class="button-primary" href="articles.html">Go to articles</a>
+              <a class="button-secondary" href="#faqs">Back to FAQs</a>
+            </div>
+          </article>
         </div>
       </section>
     </main>

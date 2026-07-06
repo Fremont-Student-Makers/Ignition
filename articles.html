@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rocket Articles & Answers | Ignition</title>
+    <meta
+      name="description"
+      content="Short, simple answers to the most common model rocketry questions, with links to the right pages on Ignition."
+    />
+    <meta name="robots" content="index,follow" />
+    <meta property="og:site_name" content="Ignition" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Rocket Articles & Answers | Ignition" />
+    <meta
+      property="og:description"
+      content="Short, simple answers to the most common model rocketry questions, with links to the right pages on Ignition."
+    />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Rocket Articles & Answers | Ignition" />
+    <meta
+      name="twitter:description"
+      content="Short, simple answers to the most common model rocketry questions, with links to the right pages on Ignition."
+    />
+    <link rel="icon" href="favicon.ico" type="image/x-icon" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Rajdhani:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body data-page="articles">
+    <header id="site-header"></header>
+
+    <main>
+      <section class="section hero-grid">
+        <div class="hero-copy">
+          <p class="eyebrow">Articles</p>
+          <h1>Common questions, simple answers.</h1>
+          <p class="lede">
+            This page collects the questions people ask most often about model rocketry and points to the exact place on the site that answers them.
+          </p>
+          <div class="hero-actions">
+            <a class="button-primary" href="#article-questions">Browse questions</a>
+            <a class="button-secondary" href="index.html#faqs">Back to homepage FAQs</a>
+          </div>
+        </div>
+        <div class="hero-media">
+          <div class="photo-slot photo-slot-large"><span>Photo area</span><strong>Question cards and quick links</strong></div>
+          <div class="photo-grid">
+            <div class="photo-slot"><span>Photo area</span><strong>Launch basics</strong></div>
+            <div class="photo-slot"><span>Photo area</span><strong>Build answers</strong></div>
+            <div class="photo-slot"><span>Photo area</span><strong>Simulation help</strong></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="article-questions" class="section article-section">
+        <div class="section-heading">
+          <p class="eyebrow">Simple questions</p>
+          <h2>Short answers that open into a real article when you need more detail.</h2>
+        </div>
+        <div class="grid article-grid">
+          <details id="article-rocket-work" class="card article-popout" open>
+            <summary>
+              <span class="article-kicker">Flight</span>
+              <span class="article-question">Will this rocket work?</span>
+              <span class="article-summary">Check stability, motor fit, and recovery first.</span>
+            </summary>
+            <div class="article-body">
+              <p class="article-tldr"><strong>TLDR:</strong> Simulate it before you build too far, because a rocket can look fine and still fail on stability, motor choice, or recovery sizing.</p>
+              <p>Use the simulation page to check whether the rocket is stable, whether the motor is a reasonable match, and whether the recovery system is sized for the expected altitude. If one of those pieces is off, the design may still fly, but not in the way you expect.</p>
+              <ul class="article-links">
+                <li><a href="simulate.html#why-simulate">Why simulate first</a></li>
+                <li><a href="simulate.html#simulation-topics">Simulation topics</a></li>
+                <li><a href="build.html#how-to-start">Start with a kit</a></li>
+              </ul>
+            </div>
+          </details>
+
+          <details id="article-fly-straight" class="card article-popout">
+            <summary>
+              <span class="article-kicker">Flight path</span>
+              <span class="article-question">Why didn't my rocket fly straight?</span>
+              <span class="article-summary">More than one thing can cause a crooked flight.</span>
+            </summary>
+            <div class="article-body">
+              <p class="article-tldr"><strong>TLDR:</strong> Don’t stop at fin alignment. A rocket can arc, weathercock, or veer because of wind, rod angle, weight balance, a bent launch lug, fin warping, or a motor that is not a good fit.</p>
+              <p>Start by checking launch conditions, then inspect the rocket itself. A strong crosswind can push a rocket off course right after launch, especially if the rod or rail was angled into the wind. After that, look for asymmetry: fins that are slightly warped, a nose weight problem, a crooked launch lug, uneven glue blobs, or damage from an earlier flight.</p>
+              <p>If the rocket still turns one direction every time, simulation and launch setup are the fastest ways to narrow it down. If the issue changes from flight to flight, the launch field or motor choice is often the better suspect.</p>
+              <ul class="article-links">
+                <li><a href="launch.html#launch-pads">Launch pad types</a></li>
+                <li><a href="launch.html#safety">Safety checklist</a></li>
+                <li><a href="build.html#alignment-jigs">Alignment jigs</a></li>
+                <li><a href="simulate.html#simulation-topics">Simulation topics</a></li>
+              </ul>
+            </div>
+          </details>
+
+          <details id="article-legal-launch" class="card article-popout">
+            <summary>
+              <span class="article-kicker">Legal</span>
+              <span class="article-question">Is it legal to launch this?</span>
+              <span class="article-summary">Local rules, field rules, and airspace rules all matter.</span>
+            </summary>
+            <div class="article-body">
+              <p class="article-tldr"><strong>TLDR:</strong> The answer depends on where you are launching, what motor or size you are using, and whether the site or club allows it.</p>
+              <p>Check local aviation guidance, club safety codes, and the rules for the field you want to use. A legal launch in one region may be restricted in another, and some places require extra notifications or club supervision. If you are unsure, use a club or approved launch field instead of guessing.</p>
+              <ul class="article-links">
+                <li><a href="launch.html#safety">Safety & legal procedures</a></li>
+                <li><a href="launch.html#organizations">Clubs & organizations</a></li>
+                <li><a href="launch.html#where-to-launch">Where to launch</a></li>
+              </ul>
+            </div>
+          </details>
+
+          <details id="article-motor-choice" class="card article-popout">
+            <summary>
+              <span class="article-kicker">Motor choice</span>
+              <span class="article-question">What motor should I use?</span>
+              <span class="article-summary">Choose the motor for the rocket and the field, not the biggest one.</span>
+            </summary>
+            <div class="article-body">
+              <p class="article-tldr"><strong>TLDR:</strong> Match the motor to the rocket’s size, weight, and experience level, then simulate the result before you buy or launch.</p>
+              <p>A bigger motor is not automatically a better motor. If the rocket is too light, too small, or too fragile, more thrust can make the flight harder to predict. A motor that fits the design and the field usually gives a cleaner first flight.</p>
+              <ul class="article-links">
+                <li><a href="launch.html#electronics">Launch controllers</a></li>
+                <li><a href="simulate.html#simulation-topics">Motor fit</a></li>
+                <li><a href="build.html#recommended-kits">Recommended kits</a></li>
+              </ul>
+            </div>
+          </details>
+
+          <details id="article-hard-landing" class="card article-popout">
+            <summary>
+              <span class="article-kicker">Recovery</span>
+              <span class="article-question">Why did it come down hard?</span>
+              <span class="article-summary">The recovery system may be wrong for the flight.</span>
+            </summary>
+            <div class="article-body">
+              <p class="article-tldr"><strong>TLDR:</strong> Hard landings usually come from an under-sized parachute, a packed recovery system, a weak ejection event, or a rocket that flew higher than the recovery setup was designed for.</p>
+              <p>Check whether the parachute or streamer was packed correctly, whether the ejection charge worked, and whether the rocket was overpowered for the recovery setup. A rocket that reaches a higher altitude than expected may descend too fast if the recovery hardware is too small.</p>
+              <ul class="article-links">
+                <li><a href="launch.html#resources">Launch checklist</a></li>
+                <li><a href="simulate.html#simulation-topics">Recovery planning</a></li>
+                <li><a href="launch.html#safety">Misfire and recovery rules</a></li>
+              </ul>
+            </div>
+          </details>
+
+          <details id="article-glue" class="card article-popout">
+            <summary>
+              <span class="article-kicker">Building</span>
+              <span class="article-question">What glue should I use?</span>
+              <span class="article-summary">Different joints need different glue types.</span>
+            </summary>
+            <div class="article-body">
+              <p class="article-tldr"><strong>TLDR:</strong> Use white glue or wood glue for beginner kits, CA for small fast fixes, and epoxy for stronger high-stress joints.</p>
+              <p>If you are building a simple kit, the safest answer is usually the simplest one. White glue and wood glue give you enough working time for alignment and are easy to sand. CA is useful for small parts when you need speed, and epoxy is best when the joint has to carry more load.</p>
+              <ul class="article-links">
+                <li><a href="build.html#adhesives">Adhesives</a></li>
+                <li><a href="build.html#how-to-start">First build steps</a></li>
+                <li><a href="build.html#alignment-jigs">Alignment jigs</a></li>
+              </ul>
+            </div>
+          </details>
+
+          <details id="article-supplies" class="card article-popout">
+            <summary>
+              <span class="article-kicker">Supplies</span>
+              <span class="article-question">Where do I buy parts?</span>
+              <span class="article-summary">Use the supplier list instead of searching from scratch.</span>
+            </summary>
+            <div class="article-body">
+              <p class="article-tldr"><strong>TLDR:</strong> The build page already groups kits, motors, launch gear, and finishing supplies so you can find the right store faster.</p>
+              <p>Start with the supplier section if you need a beginner kit, launch equipment, or consumables like glue and paint. It is easier to compare stores when they are grouped by what they sell and where they ship.</p>
+              <ul class="article-links">
+                <li><a href="build.html#suppliers">Suppliers</a></li>
+                <li><a href="build.html#recommended-kits">Recommended kits</a></li>
+                <li><a href="build.html#3d-printing">3D printing</a></li>
+              </ul>
+            </div>
+          </details>
+
+          <details id="article-advanced" class="card article-popout">
+            <summary>
+              <span class="article-kicker">Advanced</span>
+              <span class="article-question">When is it too advanced?</span>
+              <span class="article-summary">If the basics are still shaky, wait.</span>
+            </summary>
+            <div class="article-body">
+              <p class="article-tldr"><strong>TLDR:</strong> If you are still learning to build, launch, or simulate safely, active control is probably too early.</p>
+              <p>Active control and competition projects ask more of the builder, the launch field, and the recovery system. That is why the site keeps those paths separate. If the current project depends on sensors, control surfaces, or very specific launch conditions, make sure the basic workflow already feels routine.</p>
+              <ul class="article-links">
+                <li><a href="electronics.html#active-control-gate">Active control gate</a></li>
+                <li><a href="competitions.html#competition-options">Competition options</a></li>
+                <li><a href="index.html#start">Starter form</a></li>
+              </ul>
+            </div>
+          </details>
+        </div>
+      </section>
+    </main>
+
+    <footer id="site-footer"></footer>
+
+    <script type="module" src="main.js"></script>
+  </body>
+</html>
